@@ -81,7 +81,7 @@ module.exports = function(){
         context.jsscripts = ["deleteappt.js","filterappts.js","searchappts.js"];
         var mysql = req.app.get('mysql');
         getAppts(res, mysql, context, complete);
-        getPlanets(res, mysql, context, complete);
+        getDoctors(res, mysql, context, complete);
         function complete(){
             callbackCount++;
             if(callbackCount >= 2){
@@ -132,7 +132,7 @@ module.exports = function(){
         context.jsscripts = ["selectedplanet.js", "updateappt.js"];
         var mysql = req.app.get('mysql');
         getAppt(res, mysql, context, req.params.id, complete);
-        getPlanets(res, mysql, context, complete);
+        getDoctors(res, mysql, context, complete);
         function complete(){
             callbackCount++;
             if(callbackCount >= 2){
