@@ -1,13 +1,9 @@
 <html>
-<h1>Update {{appt.name}}</h1>
+<h1>Update {{appt.patient_od}}</h1>
 <form id="update-appt" action="/appts" method="post">
-    Name: <input type="text" name="name" value="{{appt.name}}"><br>
-    Doctor: <select name="doctor" id="doctor-selector"> 
-        {{#each appts}}
-            <option value="{{id}}">{{name}}</option>
-        {{/each}}
-    </select><br>
+    Patient ID: <input type="text" name="patient_id" value="{{appt.patient_id}}"><br>
+    Doctor: <input type="text" name="doctor_id" value="{{appt.doctor_id}}"><br><br>
 </form>
 <button onclick="updateAppt({{appt.id}})">Update</button>
-<script defer>selectAppt({{appt.doctor}});</script>
+<script defer>selectAppt({{appt.doctor_id}});</script>
 </html>

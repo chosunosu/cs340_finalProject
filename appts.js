@@ -27,6 +27,20 @@ module.exports = function(){
         });
     }
     
+    /* displays one appointment for editing purposes */
+    function getAppt(res, mysql, context, id, complete){
+        var sql = "SELECT appt_id as id, patient_id, doctor_id FROM dc_appt WHERE appt_id = ?";
+        var inserts = [id];
+        mysql.pool.query(sql, inserts, function(error, results, fields){
+            if(error){
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            context.person = results[0];
+            complete();
+        });
+    }
+    
 
     /*Display all appointments. Requires web based javascript to delete users with AJAX*/
 
@@ -64,5 +78,26 @@ module.exports = function(){
         }
     });
     
+    /* The URI that update data is sent to in order to update a person */
+
+    router.put('/:id', function(req, res){
+        var mysql = req.app.get('mysql');
+        console.log(req.body)
+        console.log(req.params.id)
+        var sql = "UPDATE dc_appt SET patient_id=?, doctor_id=? WHERE character_id=?";
+        var inserts = [req.body.patient_id, req.body.doctor_id, req.params.id];
+        sql = mysql.pool.query(sql,inserts,function(error, results, fields){
+            if(error){
+                console.log(error)
+                res.write(JSON.stringify(error));
+                res.end();
+            }else{
+                res.status(200);
+                res.end();
+            }
+        });
+    });
+
+
     return router;
 }();
