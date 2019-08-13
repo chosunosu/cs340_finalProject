@@ -8,6 +8,7 @@ function deleteAppt(id){
     })
 };
 
+/*
 function deletePeopleCert(pid, cid){
   $.ajax({
       url: '/people_certs/pid/' + pid + '/cert/' + cid,
@@ -22,3 +23,4 @@ function deletePeopleCert(pid, cid){
       }
   })
 };
+*/
