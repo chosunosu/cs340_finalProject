@@ -1,6 +1,6 @@
-function filterApptsByHomeworld() {
+function filterApptsByDoctor() {
     //get the id of the selected homeworld from the filter dropdown
-    var homeworld_id = document.getElementById('homeworld_filter').value
+    var doctor_id = document.getElementById('doctor_filter').value
     //construct the URL and redirect to it
-    window.location = '/appts/filter/' + parseInt(homeworld_id)
+    window.location = '/appts/filter/' + parseInt(doctor_id)
 }

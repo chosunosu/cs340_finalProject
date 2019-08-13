@@ -2,6 +2,9 @@
 {{#each foo}}
 {{this}}
 {{/each}}
+
+<button onclick="window.history.back()">Back</button><br>
+
 <h3>Add new appointment</h3>
 <form id="addappt" action="/appts" method="post">
     Appointment Date: <input type="date" name="appt_date"><br>
@@ -16,6 +19,16 @@
  </form>
 <br/>
 
+<form id='filter_people' action='' method=''>
+<!--- this form does not submit directly, the button handles all the interaction with backend -->
+    <label> Filter by doctor </label>
+    <select id='doctor_filter' name="doctor_id"> 
+        {{#each appts}}
+        <option value="{{id}}">{{name}}</option>
+        {{/each}}
+    </select><br>
+    <input type="button" value="Filter" onclick="filterApptsByDoctor()">
+</form>
 
 <h3>Current appointments:</h3>
 <table>

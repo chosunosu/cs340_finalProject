@@ -98,6 +98,22 @@ module.exports = function(){
         });
     });
 
+    /*lists appointment by doctor*/
+    
+    function getApptbyDoctor(req, res, mysql, context, complete){
+        var query = "SELECT dc_appt.appt_id as id, patient_id, dc_doctor.name AS doctor_id FROM dc_appt INNER JOIN dc_doctor ON doctor_id = dc_doctor.doctor_id WHERE dc_appt.doctor = ?";
+        console.log(req.params)
+        var inserts = [req.params.doctor]
+        mysql.pool.query(query, inserts, function(error, results, fields){
+              if(error){
+                  res.write(JSON.stringify(error));
+                  res.end();
+              }
+              context.appt = results;
+              complete();
+          });
+      }
+
         /* Adds an appointment, redirects to the appointments page after adding */
 
         router.post('/', function(req, res){
