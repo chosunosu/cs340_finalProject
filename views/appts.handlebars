@@ -3,7 +3,6 @@
 {{this}}
 {{/each}}
 
-
 <h3>Current appointments:</h3>
 <table>
     <thead>
@@ -27,8 +26,7 @@
             <td>{{appt_result}}</td>
             <td>{{next_appt_date}}</td>
             <td>{{bill_id}}</td>
-            <td><button onclick="deleteAppt({{id}})">Delete</button></td>
-            <td><a href="/appts/{{id}}">Update</a></td>
+            
         </tr>
         {{/each}}
     </tbody>
