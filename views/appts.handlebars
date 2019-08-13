@@ -8,13 +8,22 @@
 <h3>Add new appointment</h3>
 <form id="addappt" action="/appts" method="post">
     Appointment Date: <input type="date" name="appt_date"><br>
-    Patient: <input type="number" name="patient_id"><br>
+    Patient: <select name="patient"> 
+        {{#each patients}}
+        <option value="{{id}}">{{name}}</option>
+        {{/each}}
+    </select><br>
     Doctor: <select name="doctor"> 
         {{#each doctors}}
         <option value="{{id}}">{{name}}</option>
         {{/each}}
     </select><br>
-    Assistant: <input type="number" name="assist_id"><br>
+   Assistants: <select name="assist"> 
+        {{#each assistants}}
+        <option value="{{id}}">{{name}}</option>
+        {{/each}}
+    </select><br>
+    
     Appointment Reason <input type="text" name="appt_reason"><br>
     Appointment Result <input type="text" name="appt_result"><br>
     Next Appointment Date <input type="date" name="next_appt_date"><br>

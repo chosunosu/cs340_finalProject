@@ -4,12 +4,34 @@ module.exports = function(){
 
 
     function getDoctors(res, mysql, context, complete){
-        mysql.pool.query("SELECT doctor_id as id FROM dc_doctor", function(error, results, fields){
+        mysql.pool.query("SELECT doctor_id as id, name FROM dc_doctor", function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();
             }
             context.doctors  = results;
+            complete();
+        });
+    }
+
+    function getPatients(res, mysql, context, complete){
+        mysql.pool.query("SELECT patient_id as id, name FROM dc_patient", function(error, results, fields){
+            if(error){
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            context.patients  = results;
+            complete();
+        });
+    }
+
+    function getAssistants(res, mysql, context, complete){
+        mysql.pool.query("SELECT assist_id as id, name FROM dc_dentAssist", function(error, results, fields){
+            if(error){
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            context.assistants  = results;
             complete();
         });
     }
@@ -52,9 +74,11 @@ module.exports = function(){
         var mysql = req.app.get('mysql');
         getAppts(res, mysql, context, complete);
         getDoctors(res, mysql, context, complete);
+        getAssistants(res, mysql, context, complete);
+        getPatients(res, mysql, context, complete)
         function complete(){
             callbackCount++;
-            if(callbackCount >= 2){
+            if(callbackCount >= 4){
                 res.render('appts', context);
             }
 
@@ -138,8 +162,8 @@ module.exports = function(){
             console.log(req.body.doctor_id)
             console.log(req.body)
             var mysql = req.app.get('mysql');
-            var sql = "INSERT INTO dc_appt (appt_date, patient_id, doctor_id, assist_id, appt_reason, appt_result, next_appt_date, bill_id) VALUES (?,?,?,?,?,?,?,?)";
-            var inserts = [req.body.appt_date, req.body.patient_id, req.body.doctor_id, req.body.assist_id, req.body.appt_reason, req.body.appt_result, req.body.next_appt_date, req.body.bill_id];
+            var sql = "INSERT INTO dc_appt (appt_date, patient, doctor, assist, appt_reason, appt_result, next_appt_date, bill_id) VALUES (?,?,?,?,?,?,?,?)";
+            var inserts = [req.body.appt_date, req.body.patient, req.body.doctor, req.body.assist, req.body.appt_reason, req.body.appt_result, req.body.next_appt_date, req.body.bill_id];
             sql = mysql.pool.query(sql,inserts,function(error, results, fields){
                 if(error){
                     console.log(JSON.stringify(error))

@@ -13,6 +13,32 @@ module.exports = function(){
       });
     }
 
+    function getDoctors(res, mysql, context, complete){
+      mysql.pool.query("SELECT doctor_id as id, name FROM dc_doctor", function(error, results, fields){
+          if(error){
+              res.write(JSON.stringify(error));
+              res.end();
+          }
+          context.doctors  = results;
+          complete();
+      });
+  }
+
+
+  router.get('/', function(req, res){
+    var callbackCount = 0;
+    var context = {};
+    var mysql = req.app.get('mysql');
+    getDoctors(res, mysql, context, complete);
+    getPatients(res, mysql, context, complete)
+    function complete(){
+        callbackCount++;
+        if(callbackCount >= 2){
+            res.render('patients', context);
+        }
+
+    }
+});
 
     function servePatients(req, res){
         console.log("Searching for patients?")

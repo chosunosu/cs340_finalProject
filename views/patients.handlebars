@@ -3,12 +3,17 @@
 {{this}}
 {{/each}}
 <button onclick="window.history.back()">Back</button><br>
+
 <h3>Add new patient:</h3>
 <form id="addpatient" action="/patients" method="post">
     Name: <input type="text" name="name"><br>
     Address: <input type="text" name="address"><br>
     Phone: <input type="number" name="phone"><br>
-    Assigned Doctor: <input type="number" name="assigned"><br><br>
+    Assigned Doctor: Doctor: <select name="doctor"> 
+        {{#each doctors}}
+        <option value="{{id}}">{{name}}</option>
+        {{/each}}
+    </select><br>
 
     <input type="submit" value="Submit">
  </form>
@@ -32,7 +37,7 @@
           <td>{{name}}</td>
           <td>{{address}}</td>
           <td>{{phone}}</td>
-          <td>{{assigned}}</td>
+          <td>{{doctor}}</td>
         </tr>
       {{/each}}
     </tbody>
