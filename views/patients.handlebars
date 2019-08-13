@@ -2,6 +2,7 @@
 {{#each foo}}
 {{this}}
 {{/each}}
+<button onclick="window.history.back()">Back</button><br>
 <h3>Add new patient:</h3>
 <form id="addpatient" action="/patients" method="post">
     Name: <input type="text" name="name"><br>
