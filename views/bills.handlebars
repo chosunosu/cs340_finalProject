@@ -1,0 +1,44 @@
+<html>
+{{#each foo}}
+{{this}}
+{{/each}}
+<h3>Add new patient bill information:</h3>
+<form id="addbill" action="/bills" method="post">
+
+    Patient ID: <input type="number" name="patient_id"><br>
+    Appointment Date: <input type="date" name="date"><br>
+    Total Cost: <input type="number" name="total_cost"><br>
+    Payment Type: <input type="text" name="payment_type"><br>
+    Bill Due: <input type="date" name="bill_due"><br>
+    Status: <input type="text" name="status"><br>
+    <input type="submit" value="Submit">
+ </form>
+<br/>
+
+<h3>Patient bills in the database:</h3>
+<table>
+    <thead>
+        <th>Bill ID</th>
+        <th>Patient ID</th>
+        <th>Appointment Date</th>
+        <th>Total Cost</th>
+        <th>Payment Type</th>
+        <th>Bill Due</th>
+        <th>Status</th>
+
+    </thead>
+    <tbody>
+      {{#each bills}}
+        <tr>
+          <td>{{bill_id}}</td>
+          <td>{{patient_id}}</td>
+          <td>{{date}}</td>
+          <td>{{total_cost}}</td>
+          <td>{{payment_type}}</td>
+          <td>{{bill_due}}</td>
+          <td>{{status}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+</table>
+</html>
