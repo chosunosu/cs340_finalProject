@@ -1,15 +1,13 @@
 <html>
-<h1>Update {{person.fname}} {{person.lname}}:</h1>
-<form id="update-apptt" action="/appts" method="post">
-    First name: <input type="text" name="fname" value="{{person.fname}}"><br>
-    Last name: <input type="text" name="lname" value="{{person.lname}}"><br>
-    Homeworld: <select name="homeworld" id="planet-selector"> 
-        {{#each planets}}
+<h1>Update {{appt.name}}</h1>
+<form id="update-appt" action="/appts" method="post">
+    Name: <input type="text" name="name" value="{{appt.name}}"><br>
+    Doctor: <select name="doctor" id="doctor-selector"> 
+        {{#each appts}}
             <option value="{{id}}">{{name}}</option>
         {{/each}}
     </select><br>
-    Age: <input type="number" name="age" value="{{person.age}}"><br>
 </form>
-<button onclick="updateAppt({{person.id}})">Update</button>
-<script defer>selectPlanet({{person.homeworld}});</script>
+<button onclick="updateAppt({{appt.id}})">Update</button>
+<script defer>selectAppt({{appt.doctor}});</script>
 </html>
