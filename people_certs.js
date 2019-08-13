@@ -54,7 +54,7 @@ module.exports = function(){
         var mysql = req.app.get('mysql');
         var handlebars_file = 'people_certs'
 
-        getPeople(res, mysql, context, complete);
+        getDoctors(res, mysql, context, complete);
         getCertificates(res, mysql, context, complete);
         getPeopleWithCertificates(res, mysql, context, complete);
         function complete(){
