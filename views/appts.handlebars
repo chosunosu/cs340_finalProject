@@ -6,11 +6,11 @@
 <form id="addappt" action="/appts" method="post">
     Appointment Date: <input type="date" name="appt_date"><br>
     Patient: <input type="number" name="patient_id"><br>
-    Doctor: <select name="doctor_id"> 
+    Doctor: <select name="doctor_id">
         {{#each doctor}}
         <option value="{{id}}">{{name}}</option>
         {{/each}}
-    Assistant: <select name="assist_id"> 
+    Assistant: <select name="assist_id">
         {{#each assistant}}
         <option value="{{id}}">{{name}}</option>
         {{/each}}<br>
@@ -25,7 +25,7 @@
 <form id='filter_appts' action='' method=''>
 <!--- this form does not submit directly, the button handles all the interaction with backend -->
     <label> Filter by doctor </label>
-    <select id='doctor_filter' name="doctor"> 
+    <select id='doctor_filter' name="doctor">
         {{#each doctor}}
         <option value="{{id}}">{{name}}</option>
         {{/each}}
@@ -42,22 +42,22 @@
 
 <h3>Current appointments:</h3>
 <table>
-    <thead> 
+    <thead>
         <th>Appointment Date</th>
         <th>Patient</th>
         <th>Doctor</th>
-        <th>Assistant</th> 
-        <th>Appointment Reason</th> 
+        <th>Assistant</th>
+        <th>Appointment Reason</th>
         <th>Appointment Result</th>
         <th>Next Appointment Date</th>
-        <th>Bill ID</th>  
-    </thead> 
+        <th>Bill ID</th>
+    </thead>
     <tbody>
-        {{#each appts}} 
-        <tr> 
-            <td>{{appt_date}}</td> 
-            <td>{{patient_id}}</td> 
-            <td>{{doctor_id}}</td> 
+        {{#each appts}}
+        <tr>
+            <td>{{appt_date}}</td>
+            <td>{{patient_id}}</td>
+            <td>{{doctor_id}}</td>
             <td>{{assist_id}}</td>
             <td>{{appt_reason}}</td>
             <td>{{appt_result}}</td>
@@ -65,8 +65,8 @@
             <td>{{bill_id}}</td>
             <td><button onclick="deleteAppt({{id}})">Delete</button></td>
             <td><a href="/appts/{{id}}">Update</a></td>
-        </tr> 
-        {{/each}} 
-    </tbody> 
-</table> 
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
 </html>
