@@ -3,7 +3,7 @@
 {{this}}
 {{/each}}
 <h3>Add new doctor:</h3>
-<form id="adddoctor" action="/doctor" method="post">
+<form id="adddoctor" action="/doctors" method="post">
     Name: <input type="text" name="name"><br>
     Specialty: <input type="text" name="specialty"><br>
     Extension: <input type="number" name="ext"><br>
@@ -21,7 +21,7 @@
 
     </thead>
     <tbody>
-      {{#each doctor}}
+      {{#each doctors}}
         <tr>
           <td>{{doctor_id}}</td>
           <td>{{name}}</td>
