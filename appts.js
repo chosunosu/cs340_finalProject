@@ -3,7 +3,7 @@ module.exports = function(){
     var router = express.Router();
 
     function getDoctors(res, mysql, context, complete){
-        mysql.pool.query("SELECT doctor_id as id, lname FROM dc_doctor", function(error, results, fields){
+        mysql.pool.query("SELECT doctor_id as id FROM dc_doctor", function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();
