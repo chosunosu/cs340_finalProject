@@ -101,7 +101,7 @@ module.exports = function(){
     /*lists appointment by doctor*/
     
     function getApptsbyDoctor(req, res, mysql, context, complete){
-        var query = "SELECT dc_appt.appt_id as id, patient_id, dc_doctor.name AS doctor_id FROM dc_appt INNER JOIN dc_doctor ON doctor_id = dc_doctor.doctor_id WHERE dc_appt.doctor = ?";
+        var query = "SELECT dc_appt.appt_id as id, patient_id, dc_doctor.name AS doctor_id FROM dc_appt INNER JOIN dc_doctor ON doctor_id = dc_doctor.doctor_id WHERE dc_appt.doctor_id = ?";
         console.log(req.params)
         var inserts = [req.params.doctor]
         mysql.pool.query(query, inserts, function(error, results, fields){
