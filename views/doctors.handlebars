@@ -6,7 +6,7 @@
 <form id="adddoctor" action="/doctors" method="post">
     Name: <input type="text" name="name"><br>
     Specialty: <input type="text" name="specialty"><br>
-    Extension: <input type="number" name="ext"><br>
+    Extension: <input type="number" name="extension"><br>
     <input type="submit" value="Submit">
  </form>
 <br/>
@@ -26,7 +26,7 @@
           <td>{{doctor_id}}</td>
           <td>{{name}}</td>
           <td>{{specialty}}</td>
-          <td>{{ext}}</td>
+          <td>{{extension}}</td>
         </tr>
       {{/each}}
     </tbody>
