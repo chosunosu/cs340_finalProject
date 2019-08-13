@@ -2,6 +2,20 @@
 {{#each foo}}
 {{this}}
 {{/each}}
+<h3>Add new appointment</h3>
+<form id="addappt" action="/appts" method="post">
+    Appointment Date: <input type="date" name="appt_date"><br>
+    Patient: <input type="number" name="patient_id"><br>
+    Doctor: <input type="number" name="doctor_id"><br>
+    Assistant: <input type="number" name="assist_id"><br>
+    Appointment Reason <input type="text" name="appt_reason"><br>
+    Appointment Result <input type="text" name="appt_result"><br>
+    Next Appointment Date <input type="date" name="next_appt_date"><br>
+    Bill ID  <input type="number" name="bill_id"><br>
+    <input type="submit" value="Submit">
+ </form>
+<br/>
+
 
 <h3>Current appointments:</h3>
 <table>

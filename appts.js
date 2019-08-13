@@ -98,6 +98,24 @@ module.exports = function(){
         });
     });
 
+        /* Adds an appointment, redirects to the appointments page after adding */
+
+        router.post('/', function(req, res){
+            console.log(req.body.doctor_id)
+            console.log(req.body)
+            var mysql = req.app.get('mysql');
+            var sql = "INSERT INTO dc_appt (appt_date, patient_id, doctor_id, assist_id, appt_reason, appt_result, next_appt_date, bill_id) VALUES (?,?,?,?,?,?,?,?)";
+            var inserts = [req.body.appt_date, req.body.patient_id, req.body.doctor_id, req.body.assist_id, req.body.appt_reason, req.body.appt_result, req.body.next_appt_date, req.body.bill_id];
+            sql = mysql.pool.query(sql,inserts,function(error, results, fields){
+                if(error){
+                    console.log(JSON.stringify(error))
+                    res.write(JSON.stringify(error));
+                    res.end();
+                }else{
+                    res.redirect('/appts');
+                }
+            });
+        });
 
     return router;
 }();
