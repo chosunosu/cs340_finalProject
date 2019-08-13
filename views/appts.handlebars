@@ -37,18 +37,26 @@
 <h3>Current appointments:</h3>
 <table>
     <thead> 
-        <th>First Name</th> 
-        <th>Last Name</th> 
+        <th>Appointment Date</th>
+        <th>Patient</th>
         <th>Doctor</th>
-        <th>Age</th>  
+        <th>Assistant</th> 
+        <th>Appointment Reason</th> 
+        <th>Appointment Result</th>
+        <th>Next Appointment Date</th>
+        <th>Bill ID</th>  
     </thead> 
     <tbody>
         {{#each appts}} 
         <tr> 
-            <td>{{fname}}</td> 
-            <td>{{lname}}</td> 
-            <td>{{homeworld}}</td> 
-            <td>{{age}}</td>
+            <td>{{appt_date}}</td> 
+            <td>{{patient_id}}</td> 
+            <td>{{doctor_id}}</td> 
+            <td>{{assist_id}}</td>
+            <td>{{appt_reason}}</td>
+            <td>{{appt_result}}</td>
+            <td>{{next_appt_date}}</td>
+            <td>{{bill_id}}</td>
             <td><button onclick="deleteAppt({{id}})">Delete</button></td>
             <td><a href="/appts/{{id}}">Update</a></td>
         </tr> 

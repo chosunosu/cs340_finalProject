@@ -13,8 +13,11 @@ module.exports = function(){
         });
     }
 
+
+    ///mysql.pool.query("SELECT bsg_people.character_id as id, fname, lname, bsg_planets.name AS homeworld, age FROM bsg_people INNER JOIN bsg_planets ON homeworld = bsg_planets.planet_id", function(error, results, fields){
+
     function getAppts(res, mysql, context, complete){
-        mysql.pool.query("SELECT bsg_people.character_id as id, fname, lname, bsg_planets.name AS homeworld, age FROM bsg_people INNER JOIN bsg_planets ON homeworld = bsg_planets.planet_id", function(error, results, fields){
+        mysql.pool.query("SELECT dc_appt.appt_id as id, appt_date, dc_patient.lname as patient_id, dc_doctor.lname as doctor_id, assist_id, appt_reason, appt_result, next_appt_date, bill_id FROM dc_appt INNER JOIN dc_doctor ON doctor_id = dc_doctor.doctor_id, dc_patient ON patient_id = dc_patient.patient_id", function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();
@@ -54,6 +57,7 @@ module.exports = function(){
         });
     }
 
+    /* displays one appointment for editing purposes */
     function getAppt(res, mysql, context, id, complete){
         var sql = "SELECT character_id as id, fname, lname, homeworld, age FROM bsg_people WHERE character_id = ?";
         var inserts = [id];
