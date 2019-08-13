@@ -69,7 +69,7 @@ module.exports = function(){
       console.log(req.body)
       var mysql = req.app.get('mysql');
       var sql = "INSERT INTO dc_doctor (name, specialty, extension) VALUES (?,?,?)";
-      var inserts = [req.body.name, req.body.specialty, req.body.ext];
+      var inserts = [req.body.name, req.body.specialty, req.body.extension];
       sql = mysql.pool.query(sql,inserts,function(error, results, fields){
           if(error){
               console.log(JSON.stringify(error))
