@@ -60,7 +60,7 @@ module.exports = function(){
         }
     });
 
-    /* Display one person for the specific purpose of updating appointments */
+    /* Display one appointment for the specific purpose of updating appointments */
 
     router.get('/:id', function(req, res){
         callbackCount = 0;
@@ -84,7 +84,7 @@ module.exports = function(){
         var mysql = req.app.get('mysql');
         console.log(req.body)
         console.log(req.params.id)
-        var sql = "UPDATE dc_appt SET patient_id=?, doctor_id=? WHERE character_id=?";
+        var sql = "UPDATE dc_appt SET patient_id=?, doctor_id=? WHERE appt_id=?";
         var inserts = [req.body.patient_id, req.body.doctor_id, req.params.id];
         sql = mysql.pool.query(sql,inserts,function(error, results, fields){
             if(error){
