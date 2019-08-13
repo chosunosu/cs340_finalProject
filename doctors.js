@@ -16,7 +16,7 @@ module.exports = function(){
 
     function serveDoctors(req, res){
         console.log("Searching for doctors?")
-        var query = 'SELECT doctor_id, name, specialty, ext FROM dc_doctor';
+        var query = 'SELECT doctor_id, name, specialty, extension FROM dc_doctor';
         var mysql = req.app.get('mysql');
         var context = {};
 
@@ -40,7 +40,7 @@ module.exports = function(){
       console.log(chicken.params);
       fancyId = chicken.params.fancyId
 
-      var queryString = "SELECT doctor_id, name, specialty, ext FROM dc_doctor WHERE doctor_id = ?"
+      var queryString = "SELECT doctor_id, name, specialty, extension FROM dc_doctor WHERE doctor_id = ?"
 
       var mysql = steak.app.get('mysql')
       var context = {};
@@ -68,7 +68,7 @@ module.exports = function(){
       console.log(req.body.homeworld)
       console.log(req.body)
       var mysql = req.app.get('mysql');
-      var sql = "INSERT INTO dc_doctor (name, specialty, ext) VALUES (?,?,?)";
+      var sql = "INSERT INTO dc_doctor (name, specialty, extension) VALUES (?,?,?)";
       var inserts = [req.body.name, req.body.specialty, req.body.ext];
       sql = mysql.pool.query(sql,inserts,function(error, results, fields){
           if(error){
