@@ -2,8 +2,8 @@ module.exports = function(){
     var express = require('express');
     var router = express.Router();
 
-    function getDoctors(res, mysql, context, complete){
-      mysql.pool.query("SELECT doctor_id as id, name FROM dc_doctor", function(error, results, fields){
+    function getAssistants(res, mysql, context, complete){
+      mysql.pool.query("SELECT assist_id as id, name FROM dc_dentAssist", function(error, results, fields){
           if(error){
               res.write(JSON.stringify(error));
               res.end();
@@ -14,40 +14,40 @@ module.exports = function(){
     }
 
 
-    function serveDoctors(req, res){
-        console.log("Searching for doctors?")
-        var query = 'SELECT doctor_id, name, specialty, extension FROM dc_doctor';
+    function serveAssistants(req, res){
+        console.log("Searching for dental assistants?")
+        var query = 'SELECT assist_id, name, position, extension FROM dc_dentAssist';
         var mysql = req.app.get('mysql');
         var context = {};
 
-        function handleRenderingOfDoctors(error, results, fields){
+        function handleRenderingOfAssistants(error, results, fields){
           console.log(error)
           console.log(results)
           console.log(fields)
           //take the results of that query and store ti inside context
-          context.doctors = results;
+          context.assistants = results;
           //pass it to handlebars to put inside a file
-          res.render('doctors', context)
+          res.render('assistants', context)
         }
         //execute the sql query
-        mysql.pool.query(query, handleRenderingOfDoctors)
+        mysql.pool.query(query, handleRenderingOfAssistants)
 
         //res.send('Here you go!');
     }
 
-    function serveOneDoctor(chicken, steak) {
+    function serveOneAssistant(chicken, steak) {
       console.log(chicken.params.fancyId);
       console.log(chicken.params);
       fancyId = chicken.params.fancyId
 
-      var queryString = "SELECT doctor_id, name, specialty, extension FROM dc_doctor WHERE doctor_id = ?"
+      var queryString = "SELECT assist_id, name, position, extension FROM dc_dentAssist WHERE assist_id = ?"
 
       var mysql = steak.app.get('mysql')
       var context = {};
 
-      function handleRenderingOfOneDoctor(error, results, fields){
+      function handleRenderingOfOneAssistant(error, results, fields){
           console.log("results are " + results)
-          context.doctor = results[0]
+          context.assistant = results[0]
           console.log(context)
 
           if(error){
@@ -55,11 +55,11 @@ module.exports = function(){
             steak.write(error)
             steak.end();
           }else{
-            steak.render('serverDoctor',context);
+            steak.render('serverAssistant',context);
           }
       }
       //execute the query
-      var queryString = mysql.pool.query(queryString, fancyId, handleRenderingOfOneDoctor);
+      var queryString = mysql.pool.query(queryString, fancyId, handleRenderingOfOneAssistant);
 
       //steak.send("Here's a good tasty well done steak");
     }
@@ -68,20 +68,20 @@ module.exports = function(){
       console.log(req.body.homeworld)
       console.log(req.body)
       var mysql = req.app.get('mysql');
-      var sql = "INSERT INTO dc_doctor (name, specialty, extension) VALUES (?,?,?)";
-      var inserts = [req.body.name, req.body.specialty, req.body.extension];
+      var sql = "INSERT INTO dc_dentAssist (name, position, extension) VALUES (?,?,?)";
+      var inserts = [req.body.name, req.body.position, req.body.extension];
       sql = mysql.pool.query(sql,inserts,function(error, results, fields){
           if(error){
               console.log(JSON.stringify(error))
               res.write(JSON.stringify(error));
               res.end();
           }else{
-              res.redirect('/doctors');
+              res.redirect('/assistants');
           }
       });
   });
 
-    router.get('/', serveDoctors);
+    router.get('/', serveAssistants);
 
     /*
     router.get('/', function(req, res){
