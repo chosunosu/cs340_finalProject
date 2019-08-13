@@ -14,15 +14,16 @@
     Appointment Reason <input type="text" name="appt_reason"><br>
     Appointment Result <input type="text" name="appt_result"><br>
     Next Appointment Date <input type="date" name="next_appt_date"><br>
-    Bill ID  <input type="number" name="bill_id"><br>
+    Bill ID  <input type="number" name="bill_id"><br><br>
     <input type="submit" value="Submit">
  </form>
+<br/>
 <br/>
 
 <form id='filter_people' action='' method=''>
 <!--- this form does not submit directly, the button handles all the interaction with backend -->
     <label> Filter by doctor </label>
-    <select id='doctor_filter' name="doctor_id"> 
+    <select id='doctor_filter' name="doctor_id">
         {{#each appts}}
         <option value="{{id}}">{{name}}</option>
         {{/each}}
