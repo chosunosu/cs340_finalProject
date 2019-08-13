@@ -2,8 +2,8 @@ module.exports = function(){
     var express = require('express');
     var router = express.Router();
 
-    function getPlanets(res, mysql, context, complete){
-        mysql.pool.query("SELECT planet_id as id, name FROM bsg_planets", function(error, results, fields){
+    function getDoctors(res, mysql, context, complete){
+        mysql.pool.query("SELECT doctor_id as id, lname FROM dc_doctor", function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();
@@ -27,7 +27,9 @@ module.exports = function(){
         });
     }
 
-    function getApptsbyHomeworld(req, res, mysql, context, complete){
+
+    // function getApptsbyHomeworld(req, res, mysql, context, complete){
+    function getApptsbyDoctor(req, res, mysql, context, complete){
       var query = "SELECT bsg_people.character_id as id, fname, lname, bsg_planets.name AS homeworld, age FROM bsg_people INNER JOIN bsg_planets ON homeworld = bsg_planets.planet_id WHERE bsg_people.homeworld = ?";
       console.log(req.params)
       var inserts = [req.params.homeworld]
@@ -95,8 +97,8 @@ module.exports = function(){
         var context = {};
         context.jsscripts = ["deleteappt.js","filterappts.js","searchappts.js"];
         var mysql = req.app.get('mysql');
-        getApptsbyHomeworld(req,res, mysql, context, complete);
-        getPlanets(res, mysql, context, complete);
+        getApptsbyDoctor(req,res, mysql, context, complete);
+        getDoctors(res, mysql, context, complete);
         function complete(){
             callbackCount++;
             if(callbackCount >= 2){
