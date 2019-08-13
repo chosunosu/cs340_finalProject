@@ -8,7 +8,7 @@ module.exports = function(){
                 res.write(JSON.stringify(error));
                 res.end();
             }
-            context.planets  = results;
+            context.appts  = results;
             complete();
         });
     }
