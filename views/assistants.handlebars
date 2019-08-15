@@ -3,11 +3,16 @@
 {{this}}
 {{/each}}
 <button onclick="window.history.back()">Back</button><br>
+
 <h3>Add new dental assistant:</h3>
 <form id="addassistant" action="/assistants" method="post">
-    Name: <input type="text" name="name"><br>
-    Position: <input type="text" name="position"><br>
-    Extension: <input type="number" name="extension"><br><br>
+    Name: <input type="text" name="assist_name"><br>
+    Assigned Doctor <select name="position"> 
+        {{#each doctors}}
+        <option value="{{id}}">{{name}}</option>
+        {{/each}}
+        </select></br>
+    Extension: <input type="number" name="assist_extension"><br><br>
     <input type="submit" value="Submit">
  </form>
 <br/>
@@ -26,9 +31,9 @@
       {{#each assistants}}
         <tr>
           <td>{{assist_id}}</td>
-          <td>{{name}}</td>
+          <td>{{assist_name}}</td>
           <td>{{position}}</td>
-          <td>{{extension}}</td>
+          <td>{{assist_extension}}</td>
         </tr>
       {{/each}}
     </tbody>

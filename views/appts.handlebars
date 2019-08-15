@@ -33,15 +33,22 @@
 <br/>
 <br/>
 
-<form id='filter_people' action='' method=''>
+<form id='filter_appts' action='' method=''>
 <!--- this form does not submit directly, the button handles all the interaction with backend -->
     <label> Filter by doctor </label>
-    <select id='doctor_filter' name="doctor_id">
-        {{#each appts}}
+    <select id='doctor_filter' name="doctor">
+        {{#each doctors}}
         <option value="{{id}}">{{name}}</option>
         {{/each}}
     </select><br>
     <input type="button" value="Filter" onclick="filterApptsByDoctor()">
+</form>
+
+<form id='search_appts' action='' method=''>
+<!--- this form does not submit directly, the button handles all the interaction with backend -->
+    <label> Search appointments by date:</label>
+    <input id='dateSearch_date' type='date' name='dateSearch_date' value=''>
+    <input type="button" value="Search" onclick="searchApptsByDate()">
 </form>
 
 <h3>Current appointments:</h3>

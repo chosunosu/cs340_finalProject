@@ -26,7 +26,7 @@ module.exports = function(){
     }
 
     function getAssistants(res, mysql, context, complete){
-        mysql.pool.query("SELECT assist_id as id, name FROM dc_dentAssist", function(error, results, fields){
+        mysql.pool.query("SELECT assist_id as id, assist_name FROM dc_dentAssist", function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();
@@ -40,7 +40,7 @@ module.exports = function(){
     //mysql.pool.query("SELECT dc_appt.appt_id as id, appt_date, patient_id, doctor, assist_id, appt_reason, appt_result, next_appt_date, bill_id FROM dc_appt", function(error, results, fields){
     //mysql.pool.query("SELECT dc_appt.appt_id as id, appt_date, patient_id, dc_doctor.name AS doctor, assist_id, appt_reason, appt_result, next_appt_date, bill_id FROM dc_appt INNER JOIN dc_doctor ON doctor = dc_doctor.doctor_id", function(error, results, fields){
     function getAppts(res, mysql, context, complete){
-        mysql.pool.query("SELECT dc_appt.appt_id as id, appt_date, dc_patient.patient_name AS patient, dc_doctor.name AS doctor, dc_dentAssist.name AS assist, appt_reason, appt_result, next_appt_date, bill_id FROM dc_appt INNER JOIN dc_doctor ON doctor = dc_doctor.doctor_id INNER JOIN dc_patient ON patient = dc_patient.patient_id INNER JOIN dc_dentAssist ON assist = dc_dentAssist.assist_id", function(error, results, fields){
+        mysql.pool.query("SELECT dc_appt.appt_id as id, appt_date, dc_patient.patient_name AS patient, dc_doctor.name AS doctor, dc_dentAssist.assist_name AS assist, appt_reason, appt_result, next_appt_date, bill_id FROM dc_appt INNER JOIN dc_doctor ON doctor = dc_doctor.doctor_id INNER JOIN dc_patient ON patient = dc_patient.patient_id INNER JOIN dc_dentAssist ON assist = dc_dentAssist.assist_id", function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();
@@ -50,9 +50,23 @@ module.exports = function(){
         });
     }
     
+    function getApptsbyDoctor(req, res, mysql, context, complete){
+        var query = "SELECT dc_appt.appt_id as id, appt_date, dc_patient.patient_name AS patient, dc_doctor.name AS doctor, dc_dentAssist.assist_name AS assist, appt_reason, appt_result, next_appt_date, bill_id FROM dc_appt INNER JOIN dc_doctor ON doctor = dc_doctor.doctor_id INNER JOIN dc_patient ON patient = dc_patient.patient_id INNER JOIN dc_dentAssist ON assist = dc_dentAssist.assist_id WHERE dc_appt.doctor = ?";
+        console.log(req.params)
+        var inserts = [req.params.doctor]
+        mysql.pool.query(query, inserts, function(error, results, fields){
+              if(error){
+                  res.write(JSON.stringify(error));
+                  res.end();
+              }
+              context.appts = results;
+              complete();
+          });
+      }
+
     /* displays one appointment for editing purposes */
     function getAppt(res, mysql, context, id, complete){
-        var sql = "SELECT appt_id as id, patient_id, doctor_id FROM dc_appt WHERE appt_id = ?";
+        var sql = "SELECT appt_id as id, patient, doctor FROM dc_appt WHERE appt_id = ?";
         var inserts = [id];
         mysql.pool.query(sql, inserts, function(error, results, fields){
             if(error){
@@ -64,6 +78,21 @@ module.exports = function(){
         });
     }
     
+/* Find people whose fname starts with a given string in the req */
+function getApptsWithDateLike(req, res, mysql, context, complete) {
+    //sanitize the input as well as include the % character
+     var query = "SELECT dc_appt.appt_id as id, appt_date, dc_patient.patient_name AS patient, dc_doctor.name AS doctor, dc_dentAssist.assist_name AS assist, appt_reason, appt_result, next_appt_date, bill_id FROM dc_appt INNER JOIN dc_doctor ON doctor = dc_doctor.doctor_id INNER JOIN dc_patient ON patient = dc_patient.patient_id INNER JOIN dc_dentAssist ON assist = dc_dentAssist.assist_id WHERE dc_appt.appt_date LIKE " + mysql.pool.escape(req.params.s + '%');
+    console.log(query)
+
+    mysql.pool.query(query, function(error, results, fields){
+          if(error){
+              res.write(JSON.stringify(error));
+              res.end();
+          }
+          context.appts = results;
+          complete();
+      });
+  }
 
     /*Display all appointments. Requires web based javascript to delete users with AJAX*/
 
@@ -85,6 +114,41 @@ module.exports = function(){
         }
     });
 
+    /*Display all appointments from a given doctor. Requires web based javascript to delete users with AJAX*/
+    router.get('/filter/:doctor', function(req, res){
+        var callbackCount = 0;
+        var context = {};
+        context.jsscripts = ["deleteappt.js","filterappts.js","searchappts.js"];
+        var mysql = req.app.get('mysql');
+        getApptsbyDoctor(req,res, mysql, context, complete);
+        getDoctors(res, mysql, context, complete);
+        function complete(){
+            callbackCount++;
+            if(callbackCount >= 2){
+                res.render('appts', context);
+            }
+
+        }
+    });    
+    
+        /*Display all people whose name starts with a given string. Requires web based javascript to delete users with AJAX */
+        router.get('/search/:s', function(req, res){
+            var callbackCount = 0;
+            var context = {};
+            context.jsscripts = ["deleteappt.js","filterappts.js","searchappts.js"];
+            var mysql = req.app.get('mysql');
+            getApptsWithDateLike(req, res, mysql, context, complete);
+            getDoctors(res, mysql, context, complete);
+            function complete(){
+                callbackCount++;
+                if(callbackCount >= 2){
+                    res.render('appts', context);
+                }
+            }
+        });
+    
+    
+    
     /* Display one appointment for the specific purpose of updating appointments */
 
     router.get('/:id', function(req, res){
@@ -123,38 +187,7 @@ module.exports = function(){
         });
     });
 
-    /*lists appointment by doctor*/
     
-    function getApptsbyDoctor(req, res, mysql, context, complete){
-        var query = "SELECT dc_appt.appt_id as id, patient_id, dc_doctor.name AS doctor_id FROM dc_appt INNER JOIN dc_doctor ON doctor_id = dc_doctor.doctor_id WHERE dc_appt.doctor_id = ?";
-        console.log(req.params)
-        var inserts = [req.params.doctor]
-        mysql.pool.query(query, inserts, function(error, results, fields){
-              if(error){
-                  res.write(JSON.stringify(error));
-                  res.end();
-              }
-              context.appt = results;
-              complete();
-          });
-      }
-
-    /*Display all appointments from a given doctor. Requires web based javascript to delete users with AJAX*/
-    router.get('/filter/:doctor', function(req, res){
-        var callbackCount = 0;
-        var context = {};
-        context.jsscripts = ["deleteperson.js","filterpeople.js","searchpeople.js"];
-        var mysql = req.app.get('mysql');
-        getApptsbyDoctor(req,res, mysql, context, complete);
-        getDoctors(res, mysql, context, complete);
-        function complete(){
-            callbackCount++;
-            if(callbackCount >= 2){
-                res.render('appts', context);
-            }
-
-        }
-    });
 
         /* Adds an appointment, redirects to the appointments page after adding */
 

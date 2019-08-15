@@ -42,7 +42,7 @@ module.exports = function(){
 
     function servePatients(req, res){
         console.log("Searching for patients?")
-        var query = 'SELECT patient_id, name, address, phone, assigned FROM dc_patient';
+        var query = 'SELECT patient_id, name, address, phone,  FROM dc_patient';
         var mysql = req.app.get('mysql');
         var context = {};
 
@@ -66,7 +66,7 @@ module.exports = function(){
       console.log(chicken.params);
       fancyId = chicken.params.fancyId
 
-      var queryString = "SELECT patient_id, name, address, phone, assigned FROM dc_patient WHERE patient_id = ?"
+      var queryString = "SELECT patient_id, name, address, phone,  FROM dc_patient WHERE patient_id = ?"
 
       var mysql = steak.app.get('mysql')
       var context = {};

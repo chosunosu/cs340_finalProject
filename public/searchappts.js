@@ -1,6 +1,6 @@
-function searchApptsByFirstName() {
+function searchApptsByDate() {
     //get the first name 
-    var first_name_search_string  = document.getElementById('first_name_search_string').value
+    var dateSearch_date  = document.getElementById('dateSearch_date').value
     //construct the URL and redirect to it
-    window.location = '/appts/search/' + encodeURI(first_name_search_string)
+    window.location = '/appts/search/' + encodeURI(dateSearch_date)
 }
