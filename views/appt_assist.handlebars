@@ -1,0 +1,44 @@
+<html>
+{{#each foo}}
+{{this}}
+{{/each}}
+<div>
+<h3> Associate an Appointment with assistant(s) </h3>
+    <form id="add_assist_appts" action="/appt_assist" method="post">
+    Assistant: <select name='aid'>
+        {{#each people}}
+          <option value='{{aid}}'>{{assist_name}}</option>
+        {{/each}}
+    </select>
+    <br>
+    Appointment:<sup>Multi-select</sup> <select multiple name="appts">
+        {{!-- We display assist but the value that is submitted through the form is actually the certificate's id --}}
+        {{#each appointments}}
+        <option value="{{apid}}">{{assist}}</option>
+        {{/each}}
+    </select><br>
+    <input type="submit" value="Submit">
+    </form>
+</div>
+<br/>
+<h3> List of assistants with assigned appointments </h3>
+<table>
+    <thead>
+        <th>Name</th>
+        <th>Appointment</th>
+    </thead>
+    <tbody>
+        {{#each assistant_with_appts}}
+        <tr>
+            <td>{{name}}</td>
+            <td>{{appointment}}</td>
+            <td><button onclick="deleteAssistAppt({{aid}},{{apid}})">Delete</button></td>
+            <td><a href='#' onclick='javascript: alert("You can implement it just like the Add form.")'>Update</a></td>
+        </tr>
+        {{else}}
+        <b> Assistant not assigned to appointments! Grant some using the form. </b>
+        {{/each}}
+
+    </tbody>
+</table>
+</html>
