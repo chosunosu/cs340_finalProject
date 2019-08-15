@@ -6,7 +6,11 @@
 <h3>Add new patient bill information:</h3>
 <form id="addbill" action="/bills" method="post">
 
-    Patient ID: <input type="number" name="patient_id"><br>
+    Patient: <select name="bill_patient"> 
+        {{#each patients}}
+        <option value="{{id}}">{{patient_name}}</option>
+        {{/each}}
+    </select><br>
     Appointment Date: <input type="date" name="date"><br>
     Total Cost: <input type="number" name="total_cost"><br>
     Payment Type: <input type="text" name="payment_type"><br>
@@ -21,7 +25,7 @@
 <table>
     <thead>
         <th>Bill ID</th>
-        <th>Patient ID</th>
+        <th>Patient Name</th>
         <th>Appointment Date</th>
         <th>Total Cost</th>
         <th>Payment Type</th>
@@ -32,8 +36,8 @@
     <tbody>
       {{#each bills}}
         <tr>
-          <td>{{bill_id}}</td>
-          <td>{{patient_id}}</td>
+          <td>{{id}}</td>
+          <td>{{bill_patient}}</td>
           <td>{{date}}</td>
           <td>{{total_cost}}</td>
           <td>{{payment_type}}</td>

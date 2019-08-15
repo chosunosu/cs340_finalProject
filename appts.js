@@ -15,7 +15,7 @@ module.exports = function(){
     }
 
     function getPatients(res, mysql, context, complete){
-        mysql.pool.query("SELECT patient_id as id, name FROM dc_patient", function(error, results, fields){
+        mysql.pool.query("SELECT patient_id as id, patient_name FROM dc_patient", function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();
@@ -40,7 +40,7 @@ module.exports = function(){
     //mysql.pool.query("SELECT dc_appt.appt_id as id, appt_date, patient_id, doctor, assist_id, appt_reason, appt_result, next_appt_date, bill_id FROM dc_appt", function(error, results, fields){
     //mysql.pool.query("SELECT dc_appt.appt_id as id, appt_date, patient_id, dc_doctor.name AS doctor, assist_id, appt_reason, appt_result, next_appt_date, bill_id FROM dc_appt INNER JOIN dc_doctor ON doctor = dc_doctor.doctor_id", function(error, results, fields){
     function getAppts(res, mysql, context, complete){
-        mysql.pool.query("SELECT dc_appt.appt_id as id, appt_date, dc_patient.name AS patient, dc_doctor.name AS doctor, dc_dentAssist.name AS assist, appt_reason, appt_result, next_appt_date, bill_id FROM dc_appt INNER JOIN dc_doctor ON doctor = dc_doctor.doctor_id INNER JOIN dc_patient ON patient = dc_patient.patient_id INNER JOIN dc_dentAssist ON assist = dc_dentAssist.assist_id", function(error, results, fields){
+        mysql.pool.query("SELECT dc_appt.appt_id as id, appt_date, dc_patient.patient_name AS patient, dc_doctor.name AS doctor, dc_dentAssist.name AS assist, appt_reason, appt_result, next_appt_date, bill_id FROM dc_appt INNER JOIN dc_doctor ON doctor = dc_doctor.doctor_id INNER JOIN dc_patient ON patient = dc_patient.patient_id INNER JOIN dc_dentAssist ON assist = dc_dentAssist.assist_id", function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();

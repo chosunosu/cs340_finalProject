@@ -9,7 +9,7 @@
     Name: <input type="text" name="name"><br>
     Address: <input type="text" name="address"><br>
     Phone: <input type="number" name="phone"><br>
-    Assigned Doctor: Doctor: <select name="doctor"> 
+    Assigned Doctor <select name="assigned"> 
         {{#each doctors}}
         <option value="{{id}}">{{name}}</option>
         {{/each}}
@@ -34,10 +34,10 @@
       {{#each patients}}
         <tr>
           <td>{{patient_id}}</td>
-          <td>{{name}}</td>
+          <td>{{patient_name}}</td>
           <td>{{address}}</td>
           <td>{{phone}}</td>
-          <td>{{doctor}}</td>
+          <td>{{assigned}}</td>
         </tr>
       {{/each}}
     </tbody>

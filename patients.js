@@ -3,7 +3,7 @@ module.exports = function(){
     var router = express.Router();
 
     function getPatients(res, mysql, context, complete){
-      mysql.pool.query("SELECT patient_id as id, name FROM dc_patient", function(error, results, fields){
+      mysql.pool.query("SELECT patient_id, patient_name, address, phone, dc_doctor.name AS assigned FROM dc_patient INNER JOIN dc_doctor ON assigned = dc_doctor.doctor_id", function(error, results, fields){
           if(error){
               res.write(JSON.stringify(error));
               res.end();
@@ -14,7 +14,7 @@ module.exports = function(){
     }
 
     function getDoctors(res, mysql, context, complete){
-      mysql.pool.query("SELECT doctor_id as id, name FROM dc_doctor", function(error, results, fields){
+      mysql.pool.query("SELECT doctor_id AS id, name FROM dc_doctor", function(error, results, fields){
           if(error){
               res.write(JSON.stringify(error));
               res.end();
@@ -91,10 +91,10 @@ module.exports = function(){
     }
 
     router.post('/', function(req, res){
-      console.log(req.body.homeworld)
+      console.log(req.body.doctor_id)
       console.log(req.body)
       var mysql = req.app.get('mysql');
-      var sql = "INSERT INTO dc_patient (name, address, phone, assigned) VALUES (?,?,?,?)";
+      var sql = "INSERT INTO dc_patient (patient_name, address, phone, assigned) VALUES (?,?,?,?)";
       var inserts = [req.body.name, req.body.address, req.body.phone, req.body.assigned];
       sql = mysql.pool.query(sql,inserts,function(error, results, fields){
           if(error){
@@ -107,7 +107,7 @@ module.exports = function(){
       });
   });
 
-    router.get('/', servePatients);
+    //router.get('/', servePatients);
 
     /*
     router.get('/', function(req, res){
