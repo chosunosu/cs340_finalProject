@@ -34,7 +34,7 @@ module.exports = function(){
           console.log(error)
           console.log(results)
           console.log(fields)
-          //take the results of that query and store ti inside context
+          //take the results of that query and store it inside context
           context.assistants = results;
           //pass it to handlebars to put inside a file
           res.render('assistants', context)
@@ -73,7 +73,7 @@ module.exports = function(){
 
       //steak.send("Here's a good tasty well done steak");
     }
-    
+
     router.get('/', function(req, res){
       var callbackCount = 0;
       var context = {};
@@ -85,10 +85,10 @@ module.exports = function(){
           if(callbackCount >= 2){
               res.render('assistants', context);
           }
-  
+
       }
   });
-    
+
     router.post('/', function(req, res){
       console.log(req.body.homeworld)
       console.log(req.body)
