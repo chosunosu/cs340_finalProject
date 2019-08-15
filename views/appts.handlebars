@@ -20,7 +20,7 @@
     </select><br>
    Assistants: <select name="assist"> 
         {{#each assistants}}
-        <option value="{{id}}">{{name}}</option>
+        <option value="{{id}}">{{assist_name}}</option>
         {{/each}}
     </select><br>
     
@@ -40,16 +40,16 @@
         {{#each doctors}}
         <option value="{{id}}">{{name}}</option>
         {{/each}}
-    </select><br>
+    </select>
     <input type="button" value="Filter" onclick="filterApptsByDoctor()">
 </form>
-
+<br>
 <form id='search_appts' action='' method=''>
 <!--- this form does not submit directly, the button handles all the interaction with backend -->
     <label> Search appointments by date:</label>
     <input id='dateSearch_date' type='date' name='dateSearch_date' value=''>
     <input type="button" value="Search" onclick="searchApptsByDate()">
-</form>
+</form><br>
 
 <h3>Current appointments:</h3>
 <table>
@@ -80,4 +80,6 @@
         {{/each}}
     </tbody>
 </table>
+
+<input type=button onClick="parent.location.href='http://flip2.engr.oregonstate.edu:9999/'" value='Main Page'>
 </html>

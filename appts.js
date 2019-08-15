@@ -66,14 +66,14 @@ module.exports = function(){
 
     /* displays one appointment for editing purposes */
     function getAppt(res, mysql, context, id, complete){
-        var sql = "SELECT appt_id as id, patient, doctor FROM dc_appt WHERE appt_id = ?";
+        var sql = "SELECT dc_appt.appt_id as id, appt_date, dc_patient.patient_name AS patient, dc_doctor.name AS doctor, dc_dentAssist.assist_name AS assist, appt_reason, appt_result, next_appt_date, bill_id FROM dc_appt INNER JOIN dc_doctor ON doctor = dc_doctor.doctor_id INNER JOIN dc_patient ON patient = dc_patient.patient_id INNER JOIN dc_dentAssist ON assist = dc_dentAssist.assist_id WHERE appt_id = ?";
         var inserts = [id];
         mysql.pool.query(sql, inserts, function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();
             }
-            context.person = results[0];
+            context.appt = results[0];
             complete();
         });
     }
@@ -154,13 +154,14 @@ function getApptsWithDateLike(req, res, mysql, context, complete) {
     router.get('/:id', function(req, res){
         callbackCount = 0;
         var context = {};
-        context.jsscripts = ["selecteddoctor.js", "updateappt.js"];
+        context.jsscripts = ["selecteddoctor.js", "updateappt.js", "selectedpatient.js"];
         var mysql = req.app.get('mysql');
         getAppt(res, mysql, context, req.params.id, complete);
         getDoctors(res, mysql, context, complete);
+        getPatients(res, mysql, context, complete);
         function complete(){
             callbackCount++;
-            if(callbackCount >= 2){
+            if(callbackCount >= 3){
                 res.render('update-appt', context);
             }
 
@@ -173,8 +174,8 @@ function getApptsWithDateLike(req, res, mysql, context, complete) {
         var mysql = req.app.get('mysql');
         console.log(req.body)
         console.log(req.params.id)
-        var sql = "UPDATE dc_appt SET patient_id=?, doctor_id=? WHERE appt_id=?";
-        var inserts = [req.body.patient_id, req.body.doctor_id, req.params.id];
+        var sql = "UPDATE dc_appt SET patient=?, doctor=?, bill_id=? WHERE appt_id=?";
+        var inserts = [req.body.patient, req.body.doctor, req.body.bill_id, req.params.id];
         sql = mysql.pool.query(sql,inserts,function(error, results, fields){
             if(error){
                 console.log(error)
@@ -207,6 +208,22 @@ function getApptsWithDateLike(req, res, mysql, context, complete) {
                 }
             });
         });
+
+        router.delete('/:id', function(req, res){
+            var mysql = req.app.get('mysql');
+            var sql = "DELETE FROM dc_appt WHERE appt_id = ?";
+            var inserts = [req.params.id];
+            sql = mysql.pool.query(sql, inserts, function(error, results, fields){
+                if(error){
+                    console.log(error)
+                    res.write(JSON.stringify(error));
+                    res.status(400);
+                    res.end();
+                }else{
+                    res.status(202).end();
+                }
+            })
+        })
 
     return router;
 }();

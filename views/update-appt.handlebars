@@ -1,9 +1,38 @@
 <html>
-<h1>Update {{appt.patient_id}}</h1>
+<h1>Update Appointment For </h1>
+<table>
+    <thead>
+        <th>Patient</th>
+        <th>Doctor</th>
+        <th>Date</th>
+        <th>Bill ID</th>
+    </thead>
+    <tbody>
+        <td>{{appt.patient}}</td>
+        <td>{{appt.doctor}}</td>
+        <td>{{appt.appt_date}}</td>
+        <td>{{appt.bill_id}}</td>
+    </tbody>
+</table>
+<br>
+<h3>Choose information to update</h3>
 <form id="update-appt" action="/appts" method="post">
-    Patient ID: <input type="text" name="patient_id" value="{{appt.patient_id}}"><br>
-    Doctor: <input type="text" name="doctor_id" value="{{appt.doctor_id}}"><br><br>
+    Patient: <select name="patient"> 
+        {{#each patients}}
+        <option value="{{id}}">{{patient_name}}</option>
+        {{/each}}
+    </select><br>
+        Doctor: <select name="doctor"> 
+        {{#each doctors}}
+        <option value="{{id}}">{{name}}</option>
+        {{/each}}
+    </select><br>
+    Bill ID: <input type="number" name="bill_id" value="{{appt.bill_id}}"><br>
 </form>
+
+
 <button onclick="updateAppt({{appt.id}})">Update</button>
-<script defer>selectAppt({{appt.doctor_id}});</script>
+<script defer>selectAppt({{appt.doctor}});</script>
 </html>
+
+
