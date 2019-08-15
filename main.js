@@ -26,6 +26,7 @@ app.use('/patients', require('./patients.js'));
 app.use('/bills', require('./bills.js'));
 app.use('/', express.static('public'));
 
+
 app.use(function(req,res){
   res.status(404);
   res.render('404');
