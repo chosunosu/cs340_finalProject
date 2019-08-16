@@ -30,7 +30,7 @@ module.exports = function(){
     /* get assistants with their appointments */
     /* get multiple appointments in a single column and group on assist_name or id column */
     function getAssistantsWithAppointments(res, mysql, context, complete){
-        sql = "SELECT aid, apid, assist_name AS name, assist AS assistant FROM dc_dentAssist INNER JOIN dc_appt_assist on dc_dentAssist.assist_id = dc_appt_assist.aid INNER JOIN dc_appt on dc_appt.appt_id = dc_appt_assist.apid ORDER BY name, assistant"
+        sql = "SELECT aid, apid, CONCAT(assist_name) AS name, assist AS assistant FROM dc_dentAssist INNER JOIN dc_appt_assist on dc_dentAssist.assist_id = dc_appt_assist.aid INNER JOIN dc_appt on dc_appt.appt_id = dc_appt_assist.apid ORDER BY name, assistant"
          mysql.pool.query(sql, function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
