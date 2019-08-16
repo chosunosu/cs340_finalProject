@@ -5,7 +5,6 @@
 <button onclick="window.history.back()">Back</button><br>
 <h3>Add new patient bill information:</h3>
 <form id="addbill" action="/bills" method="post">
-
     Patient: <select name="bill_patient"> 
         {{#each patients}}
         <option value="{{id}}">{{patient_name}}</option>
@@ -31,7 +30,6 @@
         <th>Payment Type</th>
         <th>Bill Due</th>
         <th>Status</th>
-
     </thead>
     <tbody>
       {{#each bills}}

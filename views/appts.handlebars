@@ -23,15 +23,12 @@
         <option value="{{id}}">{{assist_name}}</option>
         {{/each}}
     </select><br>
-    
     Appointment Reason <input type="text" name="appt_reason"><br>
     Appointment Result <input type="text" name="appt_result"><br>
     Next Appointment Date <input type="date" name="next_appt_date"><br>
-    Bill ID  <input type="number" name="bill_id"><br><br>
+    Bill ID  <input type="number" name="bill_id"><br>
     <input type="submit" value="Submit">
- </form>
-<br/>
-<br/>
+ </form><br/>
 
 <h3> Filter by doctor </h3>
 <form id='filter_appts' action='' method=''>
@@ -43,8 +40,8 @@
         {{/each}}
     </select>
     <input type="button" value="Filter" onclick="filterApptsByDoctor()">
-</form>
-<br>
+</form><br>
+
 <h3>Search appointments by date:</h3>
 <form id='search_appts' action='' method=''>
 <!--- this form does not submit directly, the button handles all the interaction with backend -->
@@ -56,9 +53,9 @@
 <table>
     <thead>
         <th>Appointment Date</th>
-        <th>Patient ID</th>
+        <th>Patient</th>
         <th>Doctor</th>
-        <th>Assistant ID</th>
+        <th>Assistant</th>
         <th>Appointment Reason</th>
         <th>Appointment Result</th>
         <th>Next Appointment Date</th>
