@@ -46,7 +46,7 @@ module.exports = function(){
     router.get('/', function(req, res){
         var callbackCount = 0;
         var context = {};
-        context.jsscripts = ["deleteperson.js"];
+        context.jsscripts = ["deleteappt.js"];
         var mysql = req.app.get('mysql');
         var handlebars_file = 'appt_assist'
 

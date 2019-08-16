@@ -13,7 +13,7 @@
     <br>
     Appointment:<sup>Multi-select</sup> <select multiple name="appts">
         {{#each appointments}}
-        <option value="{{apid}}">{{assist}}</option>
+        <option value="{{apid}}">{{apid}}</option>
         {{/each}}
     </select><br>
     <input type="submit" value="Submit">
@@ -23,14 +23,14 @@
 <h3> List of assistants with assigned appointments </h3>
 <table>
     <thead>
-        <th>Name</th>
-        <th>Appointment</th>
+        <th>Assistant Name</th>
+        <th>Appointment ID</th>
     </thead>
     <tbody>
         {{#each assistant_with_appts}}
         <tr>
             <td>{{name}}</td>
-            <td>{{appointment}}</td>
+            <td>{{apid}}</td>
             <td><button onclick="deleteAssistAppt({{aid}},{{apid}})">Delete</button></td>
             <td><a href='#' onclick='javascript: alert("You can implement it just like the Add form.")'>Update</a></td>
         </tr>
