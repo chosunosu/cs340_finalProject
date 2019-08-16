@@ -3,6 +3,7 @@
 {{this}}
 {{/each}}
 <div>
+    <button onclick="window.history.back()">Back</button><br>
 <h3> Associate an Appointment with assistant(s) </h3>
     <form id="add_assist_appts" action="/appt_assist" method="post">
     Assistant: <select name='aid'>
@@ -31,8 +32,7 @@
         <tr>
             <td>{{name}}</td>
             <td>{{apid}}</td>
-            <td><button onclick="deleteAssistAppt({{aid}},{{apid}})">Delete</button></td>
-            <td><a href='#' onclick='javascript: alert("You can implement it just like the Add form.")'>Update</a></td>
+            <td><button onclick="deleteAssistAppt({{apid}},{{aid}})">Delete</button></td>
         </tr>
         {{else}}
         <b> Assistant not assigned to appointments! Grant some using the form. </b>

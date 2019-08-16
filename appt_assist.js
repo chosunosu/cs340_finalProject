@@ -90,12 +90,12 @@ module.exports = function(){
     /* This route will accept a HTTP DELETE request in the form
      * /pid/{{pid}}/appt/{{apid}} -- which is sent by the AJAX form
      */
-    router.delete('/aid/:aid/appt/:apid', function(req, res){
+    router.delete('/apid/:apid/aid/:aid', function(req, res){
         //console.log(req) //I used this to figure out where did pid and apid go in the request
         console.log(req.params.aid)
         console.log(req.params.apid)
         var mysql = req.app.get('mysql');
-        var sql = "DELETE FROM dc_appt_assist WHERE aid = ? AND apid = ?";
+        var sql = "DELETE FROM dc_appt_assist WHERE apid = ? AND aid = ?";
         var inserts = [req.params.aid, req.params.apid];
         sql = mysql.pool.query(sql, inserts, function(error, results, fields){
             if(error){

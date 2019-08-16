@@ -9,9 +9,10 @@ function deleteAppt(id){
 };
 
 
-function deleteAssistAppt(pid, cid){
+
+function deleteAssistAppt(apid, aid){
   $.ajax({
-      url: '/people_certs/pid/' + pid + '/cert/' + cid,
+      url: '/people_certs/apid/' + apid + '/cert/' + aid,
       type: 'DELETE',
       success: function(result){
           if(result.responseText != undefined){
