@@ -4,7 +4,8 @@
 {{/each}}
 <div>
     <button onclick="window.history.back()">Back</button><br>
-<h3> Associate an Appointment with assistant(s) </h3>
+<h3> Associate an Assistant with apointments </h3>
+    
     <form id="add_assist_appts" action="/appt_assist" method="post">
     Assistant: <select name='aid'>
         {{#each assistants}}
@@ -12,6 +13,8 @@
         {{/each}}
     </select>
     <br>
+    
+
     Appointment:<sup>Multi-select</sup> <select multiple name="appts">
         {{#each appointments}}
         <option value="{{apid}}">{{apid}}</option>
@@ -20,6 +23,8 @@
     <input type="submit" value="Submit">
     </form>
 </div>
+
+
 <br/>
 <h3> List of assistants with assigned appointments </h3>
 <table>
@@ -40,4 +45,6 @@
 
     </tbody>
 </table>
+<input type=button onClick="parent.location.href='http://flip2.engr.oregonstate.edu:9999/'" value='Main Page'>
+
 </html>

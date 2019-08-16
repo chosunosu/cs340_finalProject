@@ -96,7 +96,7 @@ module.exports = function(){
         console.log(req.params.apid)
         var mysql = req.app.get('mysql');
         var sql = "DELETE FROM dc_appt_assist WHERE apid = ? AND aid = ?";
-        var inserts = [req.params.aid, req.params.apid];
+        var inserts = [req.params.apid, req.params.aid];
         sql = mysql.pool.query(sql, inserts, function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));

@@ -12,7 +12,7 @@ function deleteAppt(id){
 
 function deleteAssistAppt(apid, aid){
   $.ajax({
-      url: '/people_certs/apid/' + apid + '/cert/' + aid,
+      url: '/appt_assist/apid/' + apid + '/aid/' + aid,
       type: 'DELETE',
       success: function(result){
           if(result.responseText != undefined){
