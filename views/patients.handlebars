@@ -8,7 +8,7 @@
 <form id="addpatient" action="/patients" method="post">
     Name: <input type="text" name="name"><br>
     Address: <input type="text" name="address"><br>
-    Phone: <input type="number" name="phone"><br>
+    Phone: <input type="text" name="phone"><br>
     Assigned Doctor <select name="assigned"> 
         {{#each doctors}}
         <option value="{{id}}">{{name}}</option>
